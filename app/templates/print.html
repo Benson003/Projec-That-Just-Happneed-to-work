@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+
+{% block title %} Download {% endblock %}
+
+{% block content %}
+    <style>
+        /* Styles for the button */
+        .print-button {
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* Style for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <h2>Attendee List</h2>
+
+    <!-- Placeholder for the table -->
+    <div id="tableContainer">{% include "table.html" %}</div>
+
+    <!-- Green button -->
+    <button class="print-button" onclick="printTable()">Print</button>
+</div>
+
+<script>
+    // Load the table HTML
+    fetch('localhost:5000/table')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('tableContainer').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading the table:', error));
+
+    function printTable() {
+        const originalContents = document.body.innerHTML; // Save original contents
+        const printContents = document.getElementById('tableContainer').innerHTML; // Get the table
+        document.body.innerHTML = printContents; // Replace body contents with the table
+
+        window.print(); // Trigger the print dialog
+
+        document.body.innerHTML = originalContents; // Restore original contents
+        location.reload(); // Reload the page to reset the state
+    }
+</script>
+
+{% endblock %}}

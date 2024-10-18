@@ -1,0 +1,107 @@
+<form method="POST" class="horizontal-form">
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="last_name">Surname</label>
+        <input type="text" name="last_name" id="last_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="department">Department</label>
+        <input type="text" name="department" id="department" required>
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address" required>
+    </div>
+
+    <div class="form-group">
+        <label for="unit">Unit in Church</label>
+        <input type="text" name="unit" id="unit" required>
+    </div>
+
+    <div class="form-group">
+        <label for="member">Member</label>
+        <select name="member">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="first_time">First Time</label>
+        <select name="first_time">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="level">Level</label>
+        <select name="level">
+            <option value="LEVEL_100">100</option>
+            <option value="LEVEL_200">200</option>
+            <option value="LEVEL_300">300</option>
+            <option value="LEVEL_400">400</option>
+            <option value="LEVEL_500">500</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="SUBMIT">
+    </div>
+</form>
+
+<style>
+
+    .horizontal-form {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 80%; /* or any width you prefer */
+        max-width: 600px;
+    }
+
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        flex-direction: row;
+    }
+
+    .form-group label {
+        flex: 1; /* Makes label take equal space */
+        margin-right: 10px; /* Adds space between label and input */
+        text-align: right; /* Aligns label text to the right */
+    }
+
+    .form-group input,
+    .form-group select {
+        flex: 2; /* Makes input/select take more space */
+        padding: 8px; /* Adds some padding inside the input fields */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group input[type="submit"] {
+        flex: none; /* Prevents the submit button from stretching */
+        background-color: #007bff; /* Bootstrap primary color */
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .form-group input[type="submit"]:hover {
+        background-color: #0056b3; /* Darker shade for hover effect */
+    }
+
+</style>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block stylescripts %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <style>
+        /* Styling the navigation links */
+nav {
+    display: inline; /* Use flexbox for layout */
+    justify-content: center; /* Center links horizontally */
+    gap: 20px; /* Space between links */
+    margin: 20px 0; /* Space above and below the navigation */
+}
+
+nav a {
+    text-decoration: none; /* Remove underline from links */
+    padding: 10px 20px; /* Inner padding */
+    border: 2px solid #007bff; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #007bff; /* Background color */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effects */
+}
+
+nav a:hover {
+    background-color: white; /* Change background on hover */
+    color: #007bff; /* Change text color on hover */
+    border-color: #007bff; /* Keep border color same on hover */
+}
+
+nav a:active {
+    background-color: #0056b3; /* Darker blue when active */
+    border-color: #0056b3; /* Darker border when active */
+    color: white; /* Keep text color white when active */
+}
+
+    </style>
+    <nav>
+        <a href="{{ url_for("main")}}">Home</a>
+        <a href="{{ url_for("download")}}">Download</a>
+    </nav>
+    {% block content %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<table id="attendeeTable">
+    <tr>
+        <th>First Name</th>
+        <th>Surname</th>
+        <th>Department</th>
+        <th>Address</th>
+        <th>Unit</th>
+        <th>First Time</th>
+        <th>Member</th>
+        <th>Level</th>
+    </tr>
+    {% for person in attendee %}
+    <tr>
+        <td>{{ person.first_name }}</td>
+        <td>{{ person.last_name }}</td>
+        <td>{{ person.department }}</td>
+        <td>{{ person.address }}</td>
+        <td>{{ person.unit_in_church }}</td>
+        <td>{{ 'Yes' if attendee.first_time else 'No' }}</td>
+        <td>{{ 'Yes' if attendee.member else 'No'}}</td>
+        <td>{{ person.level.value}}</td>
+    </tr>
+    {% endfor %}
+
+
+</table>
+
+<style>
+    table {
+        width: 100%; /* Full width of the container */
+        margin-top: 20px; /* Space above table */
+        border-collapse: collapse; /* Collapse borders */
+        background-color: #fff; /* White background */
+    }
+
+    th, td {
+        padding: 10px; /* Inner padding */
+        text-align: left; /* Align text to the left */
+        border: 1px solid #ddd; /* Light border */
+    }
+
+    /* Styling the table header */
+    th {
+        background-color: #007bff; /* Header background */
+        color: white; /* Header text color */
+    }
+
+    /* Alternate row colors for better readability */
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    tr:hover {
+        background-color: #f1f1f1; /* Light gray on hover */
+    }
+</style>
