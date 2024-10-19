@@ -1,5 +1,7 @@
 <table id="attendeeTable">
     <tr>
+        <th class="hide"></th>
+        <th>ID</th>
         <th>First Name</th>
         <th>Surname</th>
         <th>Department</th>
@@ -8,9 +10,14 @@
         <th>First Time</th>
         <th>Member</th>
         <th>Level</th>
+        {% if not is_download %}
+        <th>Actions</th>
+        {% endif %}
     </tr>
     {% for person in attendee %}
-    <tr>
+    <tr value="{{ person.id }}">
+        <td class="hide">{{ person.id }}</td>
+        <td>{{ loop.index }}</td>
         <td>{{ person.first_name }}</td>
         <td>{{ person.last_name }}</td>
         <td>{{ person.department }}</td>
@@ -19,6 +26,13 @@
         <td>{{ 'Yes' if attendee.first_time else 'No' }}</td>
         <td>{{ 'Yes' if attendee.member else 'No'}}</td>
         <td>{{ person.level.value}}</td>
+        {% if not is_download %}
+        <td class="hide_print">
+            <button class="delete-btn"  value = '{{ person.id }}' onclick="deleteAttendee({{ person.id }})">Delete
+            </button>
+        </td>
+        {% endif %}
+
     </tr>
     {% endfor %}
 
@@ -26,6 +40,9 @@
 </table>
 
 <style>
+    .hide{
+        display: none;
+    }
     table {
         width: 100%; /* Full width of the container */
         margin-top: 20px; /* Space above table */
@@ -53,4 +70,74 @@
     tr:hover {
         background-color: #f1f1f1; /* Light gray on hover */
     }
+
+    /* General button styles */
+    button {
+        padding: 10px 15px; /* Add padding for better appearance */
+        border: none;       /* Remove default border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer;    /* Change cursor to pointer on hover */
+        font-size: 16px;    /* Adjust font size */
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    /* Style for delete buttons */
+    .delete-btn {
+        background-color: #ff4d4d; /* Red background */
+        color: white;              /* White text */
+    }
+
+    /* Hover effect */
+    .delete-btn:hover {
+        background-color: #ff1a1a; /* Darker red on hover */
+    }
+
+    @media print{
+        .hide_print{
+            display: none;
+        }
+    }
+
 </style>
+
+<script>
+    async function deleteAttendee(attendeeId) {
+            try {
+                const response = await fetch(`/delete-attendee/${attendeeId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json' // Optional, but good practice
+                    }
+                });
+
+                if (response.ok) {
+                    const row = document.getElementById(`attendee-${attendeeId}`);
+                    if (row) {
+                        row.remove(); // Remove the row from the table
+                        alert('Attendee deleted successfully.');
+                    } else {
+                        console.error('Row not found for ID:', attendeeId);
+                        location.reload();
+                        location.reload();
+                        location.reload();
+                    }
+                } else {
+                    const errorMessage = await response.text();
+                    location.reload();
+                    location.reload();
+                    location.reload();
+                    console.error('Error response:', response.status, errorMessage);location.reload();
+
+                    location.reload();
+                    location.reload();
+
+                }
+            } catch (error) {
+                console.error('Error during deletion:', error);
+                alert('An error occurred while trying to delete the attendee.');
+                location.reload();
+                location.reload();
+                location.reload();
+            }
+        }
+</script>

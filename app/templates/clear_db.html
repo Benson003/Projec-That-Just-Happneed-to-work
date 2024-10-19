@@ -1,0 +1,53 @@
+<div class="container">
+    <form method="POST" action="/clear-db">
+        <button type="submit" class="clear-btn">CLEAR DB</button>
+    </form>
+</div>
+<style>
+    .container {
+        margin: 10px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;  /* Horizontal centering */
+        align-items: center;      /* Vertical centering */
+        height:50px;            /* Full viewport height */
+      }
+    .clear-btn {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 10px 0;
+      }
+
+      .clear-btn:hover {
+        background-color: darkred;
+      }
+</style>
+
+
+<script>
+    document.getElementById('clearDbForm').addEventListener('submit', async function(event) {
+      event.preventDefault();  // Prevent the page from reloading
+
+      try {
+        const response = await fetch('{{ url_for("clear_db")}}', {
+          method: 'POST'
+        });
+
+        if (response.ok) {
+          document.getElementById('message').innerText = 'Database cleared successfully!';
+        } else {
+          document.getElementById('message').innerText = 'Failed to clear the database.';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = 'An error occurred.';
+      }
+    });
+  </script>

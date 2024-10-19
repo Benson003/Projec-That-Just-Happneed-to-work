@@ -3,8 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block stylescripts %}{% endblock %}
+
     <title>{% block title %}{% endblock %}</title>
+    <link rel="prefetch" href="{{ url_for('main')}}">
+    <link rel="prefetch" href="{{ url_for('download')}}">
+
+
   </head>
   <body>
     <style>
@@ -46,4 +50,28 @@ nav a:active {
     </nav>
     {% block content %}{% endblock %}
   </body>
+
+    <script defer>
+        function loadPage(page) {
+            fetch(`/content/${page}`)
+              .then(response => response.text())
+              .then(html => {
+                const content = document.getElementById('content');
+                content.classList.remove('loaded'); // Start fade-out
+                setTimeout(() => {
+                  content.innerHTML = html; // Replace content
+                  content.classList.add('loaded'); // Fade-in new content
+                }, 500);
+              });
+          }
+
+          document.querySelectorAll('a[data-page]').forEach(link => {
+            link.addEventListener('click', event => {
+              event.preventDefault();
+              const page = event.target.getAttribute('data-page');
+              loadPage(page);
+            });
+          });
+
+    <script>
 </html>

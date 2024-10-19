@@ -70,7 +70,9 @@ def register_routes(app):
     @app.route('/download/')
     def download():
         data = Attendee.query.all()
-        context = {"attendee":data}
+        context = {
+            "attendee":data,
+            'is_download':True}
         return render_template("print.html",**context)
 
     @app.route('/table')
@@ -78,3 +80,37 @@ def register_routes(app):
         data = Attendee.query.all()
         context = {"attendee":data}
         return render_template('table.html',**context)
+
+
+    @app.route('/clear-db', methods=['POST'])
+    def clear_db():
+        try:
+            # Delete all rows from the Attendee table
+            db.session.query(Attendee).delete()
+            db.session.commit()
+            print("Database cleared successfully!")
+        except Exception as e:
+            db.session.rollback()
+            print(f"Failed to clear database: {e}")
+            print("Failed to clear the database.")
+
+        return redirect(url_for('main'))
+
+    @app.route('/delete-attendee/<int:attendee_id>', methods=['DELETE'])
+    def delete_attendee(attendee_id):
+        try:
+            # Find the attendee by ID
+            attendee = Attendee.query.get(attendee_id)
+
+            if attendee:
+                # Delete the attendee from the session and commit
+                db.session.delete(attendee)
+                db.session.commit()
+                return jsonify({"message": "Attendee deleted successfully."}), 204  # No content
+            else:
+                # Return an error message if the attendee is not found
+                return jsonify({"error": "Attendee not found."}), 404  # Not found
+        except Exception as e:
+            # Handle any exceptions that occur
+            print(f"Error deleting attendee: {e}")
+            return jsonify({"error": "An error occurred while deleting the attendee."}), 500  # Internal server error
