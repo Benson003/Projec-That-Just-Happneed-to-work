@@ -114,3 +114,6 @@ def register_routes(app):
             # Handle any exceptions that occur
             print(f"Error deleting attendee: {e}")
             return jsonify({"error": "An error occurred while deleting the attendee."}), 500  # Internal server error
+
+if __name__ == "__main__":
+    print

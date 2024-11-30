@@ -7,3 +7,4 @@
 /routes/__pycache__
 /server.log
 /dockerfile
+/.venv

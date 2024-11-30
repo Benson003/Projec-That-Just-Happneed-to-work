@@ -1,6 +1,6 @@
 set FLASK_APP=main:create_app
 
-flask db init
-flask db migrate -m"Initialzing Database"
-flask db upgrade
+python -m flask db init
+python -m flask db migrate -m"Initialzing Database"
+python -m flask db upgrade
 echo Server Log Start > server.log
